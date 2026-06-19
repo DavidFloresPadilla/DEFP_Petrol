@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>DEFP Petrol - Gestión de Carburantes</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>⛽ DEFP Petrol</h1>
+    <p>Sistema de gestión de inventario y venta controlada de carburantes</p>
+  </header>
+
+  <nav id="tabs">
+    <button class="tab-btn active" data-tab="venta">Nueva Venta</button>
+    <button class="tab-btn" data-tab="tanques">Tanques</button>
+    <button class="tab-btn" data-tab="clientes">Clientes</button>
+    <button class="tab-btn" data-tab="ingresos">Ingresos</button>
+    <button class="tab-btn" data-tab="historial">Historial Ventas</button>
+    <button class="tab-btn" data-tab="empresa">Configuración</button>
+  </nav>
+
+  <main>
+    <!-- VENTA -->
+    <section id="venta" class="tab-content active">
+      <h2>Nueva Venta (Salida Controlada)</h2>
+      <div class="card">
+        <label>Placa o Documento del cliente</label>
+        <div class="row">
+          <input type="text" id="ventaBuscar" placeholder="Ej. 1234ABC">
+          <button id="btnBuscarCliente">Buscar / Registrar</button>
+        </div>
+        <div id="clienteInfo" class="info-box hidden"></div>
+
+        <div id="cupoInfo" class="info-box hidden"></div>
+
+        <label>Tanque</label>
+        <select id="ventaTanque"></select>
+
+        <label>Litros solicitados</label>
+        <input type="number" id="ventaLitros" min="0" step="0.01">
+
+        <button id="btnProcesarVenta" disabled>Procesar Venta</button>
+        <div id="ventaResultado"></div>
+      </div>
+
+      <div id="registroClienteModal" class="modal hidden">
+        <div class="modal-content">
+          <h3>Cliente no encontrado — Registrar nuevo</h3>
+          <input type="text" id="nuevoDocumento" placeholder="Cédula / NIT">
+          <input type="text" id="nuevoNombre" placeholder="Nombre completo / Razón Social">
+          <input type="text" id="nuevoPlaca" placeholder="Placa del vehículo">
+          <select id="nuevoTipo">
+            <option value="Particular">Particular</option>
+            <option value="Transporte Publico">Transporte Público</option>
+            <option value="Empresa">Empresa</option>
+          </select>
+          <div class="row">
+            <button id="btnGuardarCliente">Guardar</button>
+            <button id="btnCancelarCliente" class="secondary">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TANQUES -->
+    <section id="tanques" class="tab-content">
+      <h2>Gestión de Tanques</h2>
+      <div class="card">
+        <h3>Nuevo tanque</h3>
+        <input type="text" id="tIdentificador" placeholder="Identificador (T-01)">
+        <select id="tTipo">
+          <option value="Gasolina">Gasolina</option>
+          <option value="Diesel">Diésel</option>
+        </select>
+        <input type="number" id="tCapacidad" placeholder="Capacidad máxima (L)">
+        <input type="number" id="tStockMin" placeholder="Stock mínimo de seguridad (L)">
+        <button id="btnCrearTanque">Crear tanque</button>
+      </div>
+      <table id="tablaTanques">
+        <thead><tr><th>ID</th><th>Tipo</th><th>Stock Actual</th><th>Capacidad</th><th>%</th><th>Alerta</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- CLIENTES -->
+    <section id="clientes" class="tab-content">
+      <h2>Clientes</h2>
+      <table id="tablaClientes">
+        <thead><tr><th>Documento</th><th>Nombre</th><th>Placa</th><th>Tipo</th><th>Estado</th><th>Acción</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- INGRESOS -->
+    <section id="ingresos" class="tab-content">
+      <h2>Ingresos (Abastecimiento de Tanques)</h2>
+      <div class="card">
+        <label>Tanque destino</label>
+        <select id="iTanque"></select>
+        <label>Litros ingresados</label>
+        <input type="number" id="iLitros">
+        <label>N° Factura/Remisión</label>
+        <input type="text" id="iFactura">
+        <label>Proveedor</label>
+        <input type="text" id="iProveedor">
+        <button id="btnRegistrarIngreso">Registrar Ingreso</button>
+      </div>
+      <table id="tablaIngresos">
+        <thead><tr><th>Fecha</th><th>Tanque</th><th>Litros</th><th>Factura</th><th>Proveedor</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- HISTORIAL -->
+    <section id="historial" class="tab-content">
+      <h2>Historial de Ventas</h2>
+      <table id="tablaVentas">
+        <thead><tr><th>Fecha</th><th>Cliente</th><th>Placa</th><th>Tanque</th><th>Solicitado</th><th>Autorizado</th><th>Limitada</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- EMPRESA -->
+    <section id="empresa" class="tab-content">
+      <h2>Configuración de la Empresa</h2>
+      <div class="card" id="empresaForm"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
